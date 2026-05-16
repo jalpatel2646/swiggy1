@@ -1,0 +1,32 @@
+{
+  "name": "amazon-orders-backend",
+  "version": "1.0.0",
+  "description": "Amazon E-commerce Orders Management Backend API - Production Ready",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "lint": "eslint src/**/*.js"
+  },
+  "keywords": [
+    "amazon",
+    "orders",
+    "ecommerce",
+    "backend",
+    "api",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Jal Patel",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
