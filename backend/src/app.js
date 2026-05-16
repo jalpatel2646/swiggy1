@@ -33,9 +33,9 @@ const globalErrorHandler = require("./middlewares/errorHandler");
 
 // ── Route imports ─────────────────────────────────────────────
 const healthRoutes = require("./routes/healthRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 // Future routes will be imported here:
 // const authRoutes    = require('./routes/authRoutes');
-// const orderRoutes   = require('./routes/orderRoutes');
 // const productRoutes = require('./routes/productRoutes');
 
 // ─────────────────────────────────────────────────────────────
@@ -101,10 +101,10 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 const API_PREFIX = "/api/v1";
 
 app.use(`${API_PREFIX}/health`, healthRoutes);
+app.use(`${API_PREFIX}/orders`, orderRoutes);
 
 // Future routes:
 // app.use(`${API_PREFIX}/auth`,     authRoutes);
-// app.use(`${API_PREFIX}/orders`,   orderRoutes);
 // app.use(`${API_PREFIX}/products`, productRoutes);
 // app.use(`${API_PREFIX}/users`,    userRoutes);
 
