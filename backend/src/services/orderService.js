@@ -39,7 +39,9 @@ const queryOrders = async (query) => {
     .search(["status"]) // We can search by status, e.g., ?search=ship
     .sort()
     .limitFields()
-    .paginate();
+    .paginate()
+    .lean(); // Phase 10 Optimization: Strips Mongoose Document wrapper for pure JSON speed
+
 
   // 2. Execute the query
   const orders = await builder.mongooseQuery;

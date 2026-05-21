@@ -56,7 +56,9 @@ const getUsers = async (query) => {
     .search(["firstName", "lastName", "email"])
     .sort()
     .limitFields()
-    .paginate();
+    .paginate()
+    .lean(); // Phase 10 Optimization: Strip Mongoose overhead
+
 
   const users = await builder.mongooseQuery;
 
@@ -90,7 +92,8 @@ const getUsers = async (query) => {
  * @returns {Promise<Object>} User document.
  */
 const getUser = async (userId) => {
-  const user = await User.findById(userId).select("-password");
+  const user = await User.findById(userId).select("-password").lean(); // Phase 10 Optimization
+
   if (!user) {
     throw new ApiError("User not found.", 404);
   }
@@ -238,7 +241,9 @@ const getOrders = async (query) => {
     .search(["status"])
     .sort()
     .limitFields()
-    .paginate();
+    .paginate()
+    .lean(); // Phase 10 Optimization: Strip Mongoose overhead
+
 
   const orders = await builder.mongooseQuery;
 

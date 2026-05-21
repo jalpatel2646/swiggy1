@@ -112,6 +112,16 @@ class QueryBuilder {
 
     return this;
   }
+
+  /**
+   * 6. LEAN QUERIES (Optimization)
+   * Converts Mongoose Documents to plain JavaScript objects.
+   * Drastically reduces memory usage and improves query execution speed for read-only operations.
+   */
+  lean() {
+    this.mongooseQuery = this.mongooseQuery.lean();
+    return this;
+  }
 }
 
 module.exports = QueryBuilder;
