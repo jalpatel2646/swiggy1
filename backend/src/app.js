@@ -36,6 +36,7 @@ const healthRoutes = require("./routes/healthRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const authRoutes = require("./routes/authRoutes");
 const shippingRoutes = require("./routes/shippingRoutes"); // Phase 7
+const adminRoutes = require("./routes/adminRoutes"); // Phase 8
 // Future routes will be imported here:
 // const productRoutes = require('./routes/productRoutes');
 
@@ -105,6 +106,7 @@ app.use(`${API_PREFIX}/health`, healthRoutes);
 app.use(`${API_PREFIX}/orders`, orderRoutes);
 app.use(`${API_PREFIX}/auth`, authRoutes);
 app.use(`${API_PREFIX}/shipping`, shippingRoutes); // Phase 7 — Shipping & Delivery
+app.use(`${API_PREFIX}/admin`, adminRoutes); // Phase 8 — Administrative Operations
 
 // Future routes:
 // app.use(`${API_PREFIX}/products`, productRoutes);
