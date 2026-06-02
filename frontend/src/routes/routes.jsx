@@ -16,6 +16,7 @@ const Shipping = lazy(() => import('../pages/Shipping'));
 const Tracking = lazy(() => import('../pages/Tracking'));
 const Analytics = lazy(() => import('../pages/Analytics'));
 const BulkOperations = lazy(() => import('../pages/BulkOperations'));
+const Users = lazy(() => import('../pages/Users'));
 
 // Sleek loading screen for lazy suspension fallback
 const SuspenseFallback = () => (
@@ -113,6 +114,16 @@ export const router = createBrowserRouter([
                   <ProtectedRoute allowedRoles={['admin']}>
                     <Suspense fallback={<SuspenseFallback />}>
                       <BulkOperations />
+                    </Suspense>
+                  </ProtectedRoute>
+                ),
+              },
+              {
+                path: 'users',
+                element: (
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <Suspense fallback={<SuspenseFallback />}>
+                      <Users />
                     </Suspense>
                   </ProtectedRoute>
                 ),
