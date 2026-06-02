@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grocery Store Online : Grocery Delivery App | Swiggy Instamart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .mainnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 90px;
+    }
+
+    .nav {
+      width: 55px;
+      height: 59px;
+      background-color: blue;
+      border-radius: 6px;
+      flex-shrink: 0; 
+    }
+
+    .location-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-left: 15px;
+    }
+
+    .location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 18px;
+      font-weight: 600;
+      color: blue;
+    }
+
+    .gray {
+      color: gray;
+      font-size: 14px;
+    }
+
+    .profile {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      background-color: lightgray;
+    }
+
+    .search {
+      margin: 20px 90px;
+    }
+
+    .search input {
+      height: 40px;
+      width: 100%;
+      max-width: 1200px;
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 0 10px;
+      font-size: 16px;
+    }
+
+    .bigbox {
+      display: flex;
+      flex-direction: column;  
+      justify-content: center;
+      align-items: center;
+      width: 1390px;
+      background-color: rgb(7, 103, 212);
+      margin: 20px auto;      
+      padding: 20px 0;
+      gap: 20px;               
+    }
+
+    .bigbox img {
+      max-width: 90%;          
+      height: auto;
+      border-radius: 8px; 
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .row img {
+      max-width: 400px; 
+      height: auto;
+      border-radius: 8px;
+    }
+    .content{
+        margin-left: 39px;
+    }
+  </style>
+</head>
+<body>
+  <div class="mainnav">
+    <div style="display:flex; align-items:center;">
+      <div class="nav"></div>
+      <div class="location-wrapper">
+        <div class="location">
+          Add your location
+          <img width="12px" src="./assets/arrow-down-angle-svgrepo-com (1).svg" alt="">
+        </div>
+        <div class="gray">To see items in your area</div>
+      </div>
+    </div>
+    <div class="profile"></div>
+  </div>
+
+  <div class="search">
+    <input type="text" placeholder="Search">
+  </div>
+
+  <div class="bigbox">
+    <img src="./assets/download.webp" alt="Main banner">
+
+    <div class="row">
+      <img class="veg" src="./2a7dc59d-a232-422f-9b53-943ca2d72a21_d65afeae475e4bb5bd4f1f8da9d60503Homekitchen.avif" alt="Fresh Corner">
+      <img src="./74c92fa5-9f72-4a52-8740-e1341756a0dd_Babycare.avif" alt="Indulgence Corner">
+      <img src="./79ff0a53-74d4-4b7a-83e1-fb2c0ebb20d6_Groceryessentials.avif" alt="">
+      <img src="./d4b9e261-1b04-44bb-8dac-d14a6a47884e_Mobileselectronics.avif" alt="">
+      <img src="./dd2a3c81-bee0-47f1-8c01-75c84fde8258_Toyscollection.avif" alt="">
+      <img src="./190927a6-75f9-4bb8-b249-a02eac92fe25_Cetaphil1.avif" alt="">
+      <img src="46993b49-52ab-4b68-aa11-3726b0acf486_Indulgencecorner.avif" alt="">
+
+    </div>
+
+  </div>
+  <div class="content">
+    <img src="assets/1abd8cd0-d5b0-434f-9f85-5b59b1f9fbe9_53UAG2RD0A.avif" alt="">
+    
+  </div>
+</body>
+</html>
