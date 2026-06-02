@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { useToast } from '../contexts/ToastContext';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import EmptyState from '../components/EmptyState';
+import { TableRowSkeleton } from '../components/Skeleton';
 import shippingService from '../services/shippingService';
 import { 
   Truck, 
@@ -16,8 +20,10 @@ import {
 } from 'lucide-react';
 
 const Shipping = () => {
+  useDocumentTitle('Shipping & Logistics');
   const { user } = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
   const isUserAdmin = user?.role === 'admin';
 
   const [activeTab, setActiveTab] = useState('pending'); // 'pending' or 'delivered'
@@ -102,11 +108,12 @@ const Shipping = () => {
     setIsUpdating(true);
     try {
       await shippingService.updateStatus(selectedOrder._id, updateStatusForm);
+      toast.success('Shipment status updated successfully.');
       closeUpdateModal();
       fetchShipments(); // Refresh list
     } catch (err) {
       console.error('Failed to update status:', err);
-      alert(err.message || 'Failed to update status');
+      toast.error(err.message || 'Failed to update status');
     } finally {
       setIsUpdating(false);
     }
@@ -200,13 +207,6 @@ const Shipping = () => {
 
       {/* Data Table */}
       <div className="glass-card rounded-2xl border border-slate-800 overflow-hidden shadow-2xl relative min-h-[400px]">
-        {isLoading ? (
-          <div className="absolute inset-0 z-10 bg-slate-950/50 backdrop-blur-sm flex flex-col items-center justify-center">
-            <Loader2 className="h-8 w-8 text-amazon-orange animate-spin mb-3" />
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-400">Loading Fleet Data...</span>
-          </div>
-        ) : null}
-
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-slate-900/80 border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
@@ -219,10 +219,18 @@ const Shipping = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {shipments.length === 0 && !isLoading ? (
+              {isLoading ? (
+                <>
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                </>
+              ) : shipments.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-12 text-center text-slate-500">
-                    <p className="text-sm font-semibold">No {activeTab} shipments found.</p>
+                  <td colSpan="5">
+                    <EmptyState title={`No ${activeTab} shipments found`} message={`There are currently no records in the ${activeTab} fulfillment queue.`} />
                   </td>
                 </tr>
               ) : (

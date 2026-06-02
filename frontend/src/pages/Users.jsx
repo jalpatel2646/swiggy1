@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
+import { useToast } from '../contexts/ToastContext';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import EmptyState from '../components/EmptyState';
+import { TableRowSkeleton } from '../components/Skeleton';
 import adminUserService from '../services/adminUserService';
 import { 
   Users as UsersIcon, 
@@ -19,7 +23,9 @@ import {
 } from 'lucide-react';
 
 const Users = () => {
+  useDocumentTitle('Identity & Access Management');
   const { user: currentUser } = useAuth();
+  const toast = useToast();
   
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -69,7 +75,7 @@ const Users = () => {
 
   const handleBanToggle = async (targetUser) => {
     if (targetUser._id === currentUser._id) {
-      alert("You cannot ban or unban your own account.");
+      toast.error("You cannot ban or unban your own account.");
       return;
     }
 
@@ -84,10 +90,11 @@ const Users = () => {
       } else {
         await adminUserService.banUser(targetUser._id);
       }
+      toast.success(`User successfully ${targetUser.isBanned ? 'unbanned' : 'banned'}.`);
       fetchUsers();
     } catch (err) {
       console.error('Failed to toggle ban status:', err);
-      alert(err.response?.data?.message || 'Failed to update user ban status.');
+      toast.error(err.response?.data?.message || 'Failed to update user ban status.');
     } finally {
       setIsProcessingId(null);
     }
@@ -98,7 +105,7 @@ const Users = () => {
     if (!roleModalData) return;
 
     if (roleModalData.user._id === currentUser._id) {
-      alert("Self-modification of administrative roles is prohibited to prevent accidental lockouts.");
+      toast.error("Self-modification of administrative roles is prohibited to prevent accidental lockouts.");
       setRoleModalData(null);
       return;
     }
@@ -106,11 +113,12 @@ const Users = () => {
     setIsProcessingId(roleModalData.user._id);
     try {
       await adminUserService.updateRole(roleModalData.user._id, roleModalData.newRole);
+      toast.success(`User role updated to ${roleModalData.newRole}.`);
       setRoleModalData(null);
       fetchUsers();
     } catch (err) {
       console.error('Failed to update role:', err);
-      alert(err.response?.data?.message || 'Failed to update user role.');
+      toast.error(err.response?.data?.message || 'Failed to update user role.');
     } finally {
       setIsProcessingId(null);
     }
@@ -171,13 +179,6 @@ const Users = () => {
 
       {/* Data Table */}
       <div className="glass-card rounded-2xl border border-slate-800 overflow-hidden shadow-2xl relative min-h-[400px]">
-        {isLoading ? (
-          <div className="absolute inset-0 z-10 bg-slate-950/50 backdrop-blur-sm flex flex-col items-center justify-center">
-            <Loader2 className="h-8 w-8 text-amazon-orange animate-spin mb-3" />
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-400">Loading Identities...</span>
-          </div>
-        ) : null}
-
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-slate-900/80 border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
@@ -190,10 +191,18 @@ const Users = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {users.length === 0 && !isLoading ? (
+              {isLoading ? (
+                <>
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                  <TableRowSkeleton columns={5} />
+                </>
+              ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-12 text-center text-slate-500">
-                    <p className="text-sm font-semibold">No users found matching your query.</p>
+                  <td colSpan="5">
+                    <EmptyState title="No Identities Found" message="Try searching for a different name or email address." />
                   </td>
                 </tr>
               ) : (

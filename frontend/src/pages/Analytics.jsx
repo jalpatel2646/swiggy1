@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import analyticsService from '../services/analyticsService';
 import { 
   BarChart3, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 const Analytics = () => {
+  useDocumentTitle('Financial Analytics');
   const { user } = useAuth();
   const isUserAdmin = user?.role === 'admin';
 

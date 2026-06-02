@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import EmptyState from '../components/EmptyState';
+import { TableRowSkeleton } from '../components/Skeleton';
 import { orderService } from '../services/orderService';
 import { 
   ShoppingBag, 
@@ -15,6 +18,7 @@ import {
 } from 'lucide-react';
 
 const Orders = () => {
+  useDocumentTitle('Orders Management');
   const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
 
@@ -193,13 +197,6 @@ const Orders = () => {
 
       {/* Data Table */}
       <div className="glass-card rounded-2xl border border-slate-800 overflow-hidden shadow-2xl relative min-h-[400px]">
-        {isLoading ? (
-          <div className="absolute inset-0 z-10 bg-slate-950/50 backdrop-blur-sm flex flex-col items-center justify-center">
-            <Loader2 className="h-8 w-8 text-amazon-orange animate-spin mb-3" />
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-400">Loading Records...</span>
-          </div>
-        ) : null}
-
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-slate-900/80 border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
@@ -213,10 +210,18 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {orders.length === 0 && !isLoading ? (
+              {isLoading ? (
+                <>
+                  <TableRowSkeleton columns={6} />
+                  <TableRowSkeleton columns={6} />
+                  <TableRowSkeleton columns={6} />
+                  <TableRowSkeleton columns={6} />
+                  <TableRowSkeleton columns={6} />
+                </>
+              ) : orders.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-12 text-center text-slate-500">
-                    <p className="text-sm font-semibold">No orders found matching your criteria.</p>
+                  <td colSpan="6">
+                    <EmptyState title="No Orders Found" message="Try adjusting your filters or search query." />
                   </td>
                 </tr>
               ) : (

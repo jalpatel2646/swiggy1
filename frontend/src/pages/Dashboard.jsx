@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import analyticsService from '../services/analyticsService';
 import { orderService } from '../services/orderService';
 import { 
@@ -17,6 +18,7 @@ import {
 } from 'lucide-react';
 
 const Dashboard = () => {
+  useDocumentTitle('Executive Dashboard');
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin';
 
