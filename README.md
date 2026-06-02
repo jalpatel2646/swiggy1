@@ -1,281 +1,325 @@
-# Amazon E-commerce Orders Management Backend API System
+# 🛒 Amazon E-commerce Orders Management Backend API System
 
-![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
-![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+![Banner](https://via.placeholder.com/1200x300.png?text=Amazon+Orders+Management+Backend+API)
 
-## 2. Project Overview
-The **Amazon E-commerce Orders Management Backend** is an enterprise-grade, highly scalable RESTful API built on Node.js and MongoDB. It handles the complete lifecycle of e-commerce orders, mimicking the architectural complexity of modern logistics platforms like Amazon. It features advanced order processing, bulk operations, deep shipping logistics, native database aggregations for revenue tracking, and a zero-trust administrative security model.
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express.js" />
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens" alt="JWT" />
+  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman" />
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License" />
+</p>
 
-## 3. Project Objective
-The objective of this project is to construct a production-ready, highly optimized backend architecture capable of serving enterprise loads. It demonstrates a strict decoupling of business logic via a Service Layer architecture, advanced MongoDB optimizations (lean queries, compound indexing), and secure, centralized error and validation handling.
+## 📖 Project Overview
 
-## 4. Features Overview
-- **Advanced Order Logistics:** Full lifecycle management including statuses, automated invoices, re-ordering, cancellations, and soft-archiving.
-- **Enterprise Bulk Operations:** Native MongoDB batch processing to handle thousands of concurrent mutations efficiently.
-- **Shipping Integration:** Delivery routing matrices, weekend-aware ETAs, label generation, and step-by-step tracking trails.
-- **Zero-Trust RBAC:** Granular JWT role enforcement, lockout prevention, and tamper-evident administrative audit logging.
-- **Centralized Middleware:** Unified Joi schema validation protecting endpoints from NoSQL injection, backed by a unified HTTP `ApiError` handler.
-- **Analytics Pipelines:** Native MongoDB aggregation pipelines computing gross revenue, net margins, and time-bucketed sales reports.
+The **Amazon E-commerce Orders Management Backend API System** is a robust, highly scalable, and production-ready backend designed to handle complex order lifecycles for an e-commerce platform. It provides a comprehensive set of RESTful APIs for managing users, handling authentication, processing orders, advanced searching and filtering, and generating detailed analytics and statistics.
 
-## 5. Tech Stack
-- **Runtime Environment:** Node.js (v18+)
-- **Framework:** Express.js
-- **Database:** MongoDB Atlas (NoSQL)
-- **ODM:** Mongoose
-- **Validation:** Joi
-- **Security:** bcryptjs (password hashing), jsonwebtoken (JWT)
-- **Logging & Monitoring:** Morgan, custom JSON file auditing
-- **Containerization:** Docker
+Built with **Node.js, Express.js, and MongoDB**, it embraces best practices such as MVC architecture, Service Layer pattern, role-based access control (RBAC), and centralized error handling to ensure high maintainability and enterprise-grade performance.
 
-## 6. Backend Architecture
-The backend employs a modern **Domain-Driven Design (DDD)** combined with a strict **MVC (Model-View-Controller)** and **Service Layer** separation. This ensures maximum maintainability, testability, and scalability. Route definitions are isolated from request extraction, which is in turn isolated from database logic.
+---
 
-## 7. MVC Architecture Explanation
-While standard MVC (Model-View-Controller) dictates the flow of data, APIs inherently lack a traditional "View". In this architecture, the "View" is replaced by a standardized JSON output formatted by centralized response utilities. The **Model** strictly governs data shape and lifecycle hooks, while the **Controller** acts exclusively as an HTTP traffic director.
+## ✨ Features
 
-## 8. Service Layer Explanation
-To prevent "Fat Controllers" (controllers overloaded with Mongoose queries), all business logic is offloaded to the **Service Layer** (`src/services`). Controllers extract HTTP data (`req.body`, `req.params`) and pass it to pure JavaScript Service functions. This makes the logic heavily reusable; a service function can be triggered by a controller, a cron job, or an internal bulk script seamlessly.
+- **Advanced Authentication & Authorization**: Secure JWT-based authentication, role-based access control, OTP verification, and password reset functionalities.
+- **Comprehensive Order Management**: Full CRUD operations for orders, including order history, archiving/restoring, duplication, and invoice generation.
+- **Robust Search & Filtering**: Fuzzy search, autocomplete, and extensive filtering by status, category, date, price, and location.
+- **Pagination & Sorting**: Efficient data retrieval using dynamic pagination and multi-field sorting.
+- **In-depth Analytics & Statistics**: Insights into revenue, top products, top customers, and performance statistics.
+- **Shipping Management**: Shipment tracking, status updates, delivery estimation, and address management.
+- **Admin & Bulk Operations**: Powerful admin controls for user management, bulk operations (create, update, delete, archive), and system monitoring.
 
-## 9. Folder Structure
+---
+
+## 🛠 Tech Stack
+
+| Category | Technologies |
+| :--- | :--- |
+| **Runtime Environment** | Node.js |
+| **Web Framework** | Express.js |
+| **Database** | MongoDB, Mongoose |
+| **Security & Auth** | JWT, bcrypt |
+| **Validation** | Joi |
+| **API Testing** | Postman |
+
+---
+
+## 🏗 Architecture Overview
+
+### MVC Architecture
+The system strictly adheres to the **Model-View-Controller (MVC)** architectural pattern adapted for API design (Model-Route-Controller-Service):
+- **Models**: Defines MongoDB schemas and data constraints using Mongoose.
+- **Controllers**: Handles incoming HTTP requests, validates inputs, and coordinates with services to send standardized JSON responses.
+
+### Service Layer Explanation
+To ensure business logic is completely decoupled from HTTP request handling, a **Service Layer** is implemented. 
+- Controllers delegate data processing and business rules to Services.
+- This promotes code reusability (e.g., calling an `OrderService` from both an API route and a cron job) and simplifies unit testing.
+
+### Folder Structure
 ```text
-backend/
-├── logs/                   # Secure audit log output directory
-├── scripts/                # Database seeding & destruction utilities
-├── src/
-│   ├── config/             # Environment validation & DB connection
-│   ├── controllers/        # Thin HTTP handlers
-│   ├── middlewares/        # JWT Auth, Joi Validation, Global Error Catch
-│   ├── models/             # Mongoose schemas & Pre-save hooks
-│   ├── routes/             # Express routers (Zero-trust layout)
-│   ├── services/           # Heavy lifting, Aggregations, DB ops
-│   ├── utils/              # QueryBuilders, Invoice Gen, ApiError, Responses
-│   ├── app.js              # Express app initialization & Middleware stack
-│   └── server.js           # Server boot & Graceful Shutdown
-├── .dockerignore           # Container optimization
-├── .env.example            # Environment variables template
-├── API_DOCUMENTATION.md    # Postman integration guide
-├── Dockerfile              # Multi-stage production container
-└── package.json            # Dependencies & npm scripts
+📦 amazon_orders_jal_patel
+ ┣ 📂 backend
+ ┃ ┣ 📂 src
+ ┃ ┃ ┣ 📂 config          # Environment and database configurations
+ ┃ ┃ ┣ 📂 controllers     # Request handlers
+ ┃ ┃ ┣ 📂 middlewares     # Custom reusable middlewares (Auth, Error Handler, etc.)
+ ┃ ┃ ┣ 📂 models          # Mongoose schemas
+ ┃ ┃ ┣ 📂 routes          # Express API route definitions
+ ┃ ┃ ┣ 📂 services        # Core business logic layer
+ ┃ ┃ ┣ 📂 utils           # Helper functions (Standard responses, tokens, logger)
+ ┃ ┃ ┣ 📂 validations     # Joi validation schemas
+ ┃ ┃ ┗ 📜 app.js          # Express app setup
+ ┃ ┣ 📜 server.js         # Entry point for the Node server
+ ┃ ┣ 📜 .env.example      # Environment variables template
+ ┃ ┗ 📜 package.json      # Dependencies and npm scripts
 ```
 
-## 10. Folder Responsibilities
-- **`config/`**: Centralizes and validates `.env` variables ensuring the app crash-fails early if misconfigured.
-- **`controllers/`**: Extracts HTTP payloads, calls services, and wraps output in standard JSON.
-- **`middlewares/`**: Intercepts requests for authentication, validation, and error routing.
-- **`models/`**: Defines schemas, indexes, and automated state-transition hooks.
-- **`routes/`**: Maps URL paths to controllers and applies route-specific middleware.
-- **`services/`**: Executes Mongoose operations, bulk processing, and data aggregations.
-- **`utils/`**: Reusable generic logic (QueryBuilder, API Responses, Audit Logging).
+### Folder Responsibilities
+- **`controllers/`**: Extracts data from requests and passes it to the relevant service.
+- **`services/`**: Contains the core logic. Performs database operations and applies business rules.
+- **`middlewares/`**: Handles request interception (e.g., verify JWT, check roles, validate payloads).
+- **`models/`**: Data abstraction.
+- **`validations/`**: Ensures data integrity before reaching the controller.
 
-## 11. Request Lifecycle
-1. **Client Request** arrives at Node.js Express server.
-2. **Global Middleware** logs the request (Morgan) and parses JSON.
-3. **Route Matching** directs traffic to the appropriate namespace (`/api/v1/orders`).
-4. **Auth Middleware** verifies JWT and Role constraints.
-5. **Validation Middleware** verifies payload against Joi schemas.
-6. **Controller** extracts sanitized data and invokes the Service.
-7. **Service** executes optimized Mongoose queries.
-8. **Controller** wraps the result in `ApiResponse` and sends HTTP 200/201.
+---
 
-## 12. Middleware Flow
-Requests pass through a strict pipeline:
-`morgan` -> `express.json` -> `protect` (JWT Check) -> `restrictTo(Role)` -> `validate(Joi Schema)` -> **Controller**. If any step fails, `next(error)` routes the failure instantly to the `globalErrorHandler` bypassing the rest of the application.
+## 🗄 Database Design
 
-## 13. Database Design
-The MongoDB database is optimized for both heavy read operations (dashboards) and consistent write operations (order creation). We employ **Snapshotting** over **Referencing** for order items and shipping addresses—meaning product prices are hard-copied into an order. If a product price changes tomorrow, the historical order retains the exact price paid at the time of purchase.
+### Collections Overview
 
-## 14. Collections Overview
-- **Users**: Authentication credentials, roles, and active status.
-- **Orders**: Embedded snapshots of purchased items, shipping addresses, monetary calculations, and historical state transitions.
-- **Shipments**: Carrier information, tracking IDs, delivery notes, and delivery checkpoint arrays.
+1. **Users**: Stores customer and admin profiles, hashed passwords, roles, and status.
+2. **Orders**: Contains order details, items purchased, total amount, shipping addresses, and status history.
+3. **Products** (Referenced): Represents items available in the catalog.
+4. **Shipments**: Tracks the delivery lifecycle of an order.
+5. **Invoices**: Stores generated billing documents linked to orders.
 
-## 15. Relationships
-- **Order to User**: `1:N` Reference (`ObjectId`). Indexed for blazing fast "My Orders" retrieval.
-- **Order to Product**: `1:N` Embedded Snapshot. Products are copied into `orderItems` at checkout.
-- **Shipment to Order**: `1:1` Reference. Separated to keep Order documents lightweight during financial analytics.
+---
 
-## 16. Authentication Flow
-Authentication uses stateless JWTs. 
-1. Client submits `POST /auth/login`.
-2. Service verifies bcrypt password hash.
-3. Service generates a signed JWT payload containing `{ id: userId }`.
-4. Client stores the token and includes it in the `Authorization: Bearer <token>` header for subsequent requests.
+## 🔄 Request Lifecycle
 
-## 17. JWT Security Flow
-The `protect` middleware intercepts incoming requests:
-1. Extracts the Bearer token.
-2. Verifies the cryptographic signature using `JWT_SECRET`.
-3. Checks if the user still exists in the database.
-4. Checks if the user changed their password *after* the token was issued (rejecting hijacked tokens).
-5. Appends the full user document to `req.user`.
+1. **Client Request**: An API call is made to a specific endpoint.
+2. **Route matching**: Express router directs it to the appropriate route.
+3. **Middleware Execution**: 
+   - Global middlewares (CORS, Morgan logger, Body parser).
+   - Auth middleware (Verifies JWT and User Role).
+   - Validation middleware (Validates payload using Joi).
+4. **Controller**: Receives the validated request and passes data to the Service.
+5. **Service**: Executes business logic and interacts with the Database (MongoDB via Mongoose).
+6. **Response**: The Controller returns a standardized formatted API response or passes an error to the Global Error Handler.
 
-## 18. Role-Based Access Control
-The `restrictTo(...roles)` middleware evaluates `req.user.role`. Administrative endpoints strictly demand the `"admin"` role. The system implements a mathematical self-lockout guard preventing an admin from demoting or banning themselves if they are the sole administrator in the database.
+### Authentication Flow
+- User logs in providing credentials.
+- `bcrypt` compares the hashed password.
+- If successful, a JWT (JSON Web Token) is generated and returned.
+- Client passes this token in the `Authorization` header (`Bearer <token>`) for subsequent protected requests.
 
-## 19. API Categories
-APIs are structurally grouped by domain:
-- `Auth`: Registration, Login, Profile.
-- `Orders`: Core CRUD and customer workflows.
-- `Orders Bulk`: High-performance batch processing.
-- `Shipping`: Carrier logistics and tracking.
-- `Admin`: System telemetry and revenue aggregation.
+### Authorization Flow
+- Protected routes use a middleware to decode the JWT.
+- It attaches the user payload to `req.user`.
+- Role-based middleware (`authorizeRoles('admin')`) checks if `req.user.role` has the required permissions before proceeding.
 
-## 20. CRUD APIs
-Standard operations mapping to HTTP Verbs:
-- `POST` creates resources.
-- `GET` retrieves resources (lists or singles).
-- `PATCH` applies partial updates.
-- `DELETE` removes resources.
+---
 
-## 21. Search & Filtering System
-Powered by `QueryBuilder.js`, the API accepts dynamic URL queries.
-- **Equality/Range:** `?price[gte]=100&status=shipped`
-- **Regex Search:** `?search=headphones` (automatically maps to case-insensitive regex against predefined model fields).
+## 🧩 API Modules
 
-## 22. Pagination & Sorting
-- **Pagination:** `?page=2&limit=50` controls skip/limit math automatically.
-- **Sorting:** `?sort=-createdAt,price` resolves directly to Mongoose sort parameters.
-- **Projection:** `?fields=name,price` strips out heavy embedded arrays to save bandwidth.
+### 1. Authentication & Authorization
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Authenticate user & get token
+- `POST /api/auth/logout` - Invalidate user session
+- `POST /api/auth/forgot-password` - Trigger password reset OTP
+- `POST /api/auth/reset-password` - Reset password
 
-## 23. Aggregation & Analytics
-Administrative reports utilize native MongoDB `$group`, `$match`, and `$project` pipelines. By calculating gross sales, net revenues, and average order values natively in C++ on the database engine, we avoid transferring gigabytes of raw JSON to Node.js for processing.
+### 2. Order Management
+- `POST /api/orders` - Create a new order
+- `GET /api/orders/:id` - Get order details and summary
+- `PUT /api/orders/:id/cancel` - Cancel an order
+- `POST /api/orders/:id/duplicate` - Duplicate a past order
+- `GET /api/orders/:id/invoice` - Generate order invoice
 
-## 24. Shipping Management
-The shipping service layer handles highly customized logic:
-- Carrier matching (UPS, FedEx, USPS).
-- Weekend-aware delivery estimation dates.
-- Internal automated tracking checkpoints generated dynamically whenever a shipment's status shifts.
+### 3. Search System
+Implements Keyword Search, Fuzzy Search, and Autocomplete.
+- `GET /api/orders/search?keyword=laptop`
+- `GET /api/orders/search?customer=john`
 
-## 25. Admin Management
-Provides zero-trust visibility into the platform:
-- Server telemetry (RAM, CPU load, Node process ID, uptime).
-- Secure paginated streaming of the internal JSON audit log (`logs/admin_audit.log`).
-- Advanced user management including ban/unban toggles.
+### 4. Filtering System
+Extensive querying capabilities.
+- `GET /api/orders?status=DELIVERED&payment=PAID`
+- `GET /api/orders?price[gte]=100&price[lte]=500`
+- `GET /api/orders?date[from]=2023-01-01&date[to]=2023-12-31`
 
-## 26. Bulk Operations
-Located at `/api/v1/orders/bulk`, these endpoints leverage:
-- `Model.insertMany({ ordered: false })` for massive data imports.
-- `Model.bulkWrite()` for distinct multi-document updates in a single network trip.
-- `Model.updateMany()` for sweeping archive/restore operations.
+### 5. Pagination & Sorting
+- `GET /api/orders?page=1&limit=20` (Dynamic Pagination)
+- `GET /api/orders?sort=-createdAt` (Date Sorting descending)
+- `GET /api/orders?sort=amount` (Amount Sorting ascending)
 
-## 27. Validation System
-Joi dictates strict data types, boundaries, and formats. Bulk endpoints restrict payloads to a maximum of `1000` array elements, neutralizing payload-bombing DDoS attempts that would otherwise stall the single-threaded Node.js event loop.
+### 6. Analytics & Reporting
+- `GET /api/analytics/revenue/monthly` - Monthly Revenue breakdown
+- `GET /api/analytics/top-customers` - Top Customers by spend
+- `GET /api/analytics/top-products` - Top Products by sales volume
 
-## 28. Logging System
-- **Morgan:** Intercepts HTTP traffic. Configured dynamically to output colorful `"dev"` logs locally, and verbose Apache-style `"combined"` logs (capturing IPs and User Agents) in production.
-- **Audit Logger:** A specialized file-system logger writes non-repudiable JSON entries for every administrative mutation (bans, role changes, bulk operations).
+### 7. Statistics Module
+- `GET /api/statistics/daily` - Daily operational statistics
+- `GET /api/statistics/shipping` - Shipping performance metrics
 
-## 29. Error Handling Strategy
-Controllers are wrapped in a `catchAsync` higher-order function, completely eliminating `try/catch` block bloat. Any thrown `ApiError` is caught by the `globalErrorHandler`, which strips stack traces in production and unifies output to a predictable `{"status": "error", "message": "..."}` shape.
+### 8. Shipping Management
+- `GET /api/shipments/:orderId/track` - Shipment tracking
+- `PUT /api/shipments/:id/status` - Shipment status updates
 
-## 30. Optimization Strategies
-- **Lean Queries:** All read-only list endpoints call `.lean()` via the `QueryBuilder`, stripping the heavy Mongoose document wrappers and returning raw POJOs. This drops memory consumption drastically.
-- **Compound Indexing:** Databases enforce multi-key indexes (`{ status: 1, createdAt: -1 }`) allowing instant filtering and chronological sorting of millions of records without linear scanning.
+### 9. Admin Management
+- `GET /api/admin/users` - User Management
+- `PUT /api/admin/users/:id/ban` - Ban/Unban Users
+- `GET /api/admin/system/health` - Health Checks
 
-## 31. Security Best Practices
-- Passwords are never returned in queries (`select: false`).
-- MongoDB Injection is mitigated by Joi schema sanitization enforcing exact 24-character ObjectIds.
-- Deep system telemetry is strictly fenced behind `restrictTo("admin")`.
-- JWT Tokens are stateless and verified via cryptographically secure HMAC SHA-256.
+### 10. Bulk Operations
+- `POST /api/orders/bulk` - Bulk Create
+- `PUT /api/orders/bulk-update` - Bulk Update
 
-## 32. Environment Variables Setup
-Create a `.env` file at the root of the `/backend` directory:
-```env
-NODE_ENV=development
-PORT=5000
-MONGO_URI=mongodb+srv://<user>:<password>@cluster0...
-JWT_SECRET=super_secret_key_change_me
-JWT_EXPIRES_IN=7d
-ALLOWED_ORIGINS=http://localhost:3000
-```
+---
 
-## 33. Installation Guide
-```bash
-git clone https://github.com/jalpatel2646/amazon_orders_jal_patel.git
-cd amazon_orders_jal_patel/backend
-npm install
-```
+## 🛡 Security & Best Practices
 
-## 34. MongoDB Setup
-Ensure you have a MongoDB Atlas account. Create a new cluster, retrieve your connection string, replace `<password>` with your database user's password, and insert it into your `.env` file.
+### Validation Strategy
+- **Joi Validation**: All incoming request bodies, params, and queries are strictly validated before hitting the controllers.
+- Prevents NoSQL Injection and ensures data consistency.
 
-## 35. Running the Server
-```bash
-# Run in development with Nodemon auto-reloading
-npm run dev
+### Error Handling Strategy
+- **Global Error Handler**: A centralized middleware catches all errors.
+- **Async Error Wrapper**: Eliminates `try...catch` blocks in controllers by wrapping async functions.
+- **Standardized API Responses**: All responses (success or error) follow a consistent JSON structure.
 
-# Run in production mode
-npm start
-```
+### Logging Strategy
+- **Morgan Logger**: Intercepts HTTP requests and logs them to the console for monitoring.
+- Error logs capture detailed stack traces in the development environment.
 
-## 36. npm Scripts
-- `npm start`: Boots the production server.
-- `npm run dev`: Boots the development server with live-reloading.
-- `npm run seed`: Injects dummy users and orders into the database.
-- `npm run seed:destroy`: Wipes the entire database clean.
-- `npm run lint`: Runs ESLint across all source files.
+### Optimization Techniques
+- **MongoDB Indexing Strategy**: Compound and single-field indexes are applied to frequently queried fields (`status`, `customerId`, `createdAt`) to optimize read performance.
+- Queries are projected to return only necessary fields.
 
-## 37. API Response Structure
-Every endpoint guarantees a consistent standard response format:
+---
+
+## 🚀 Getting Started
+
+### Local Setup & Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/jalpatel2646/amazon_orders_jal_patel.git
+   cd amazon_orders_jal_patel/backend
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Variables:**
+   Create a `.env` file in the root directory based on `.env.example`:
+   ```env
+   NODE_ENV=development
+   PORT=5000
+   MONGO_URI=mongodb://localhost:27017/amazon_orders
+   JWT_SECRET=your_super_secret_jwt_key
+   JWT_EXPIRE=30d
+   ```
+
+4. **Run the Project:**
+   ```bash
+   # Development mode (with nodemon)
+   npm run dev
+
+   # Production mode
+   npm start
+   ```
+
+### NPM Scripts
+- `npm start`: Starts the application using Node.
+- `npm run dev`: Starts the application with Nodemon for hot-reloading.
+- `npm run seed`: Populates the database with initial dummy data.
+
+---
+
+## 📝 API Examples
+
+### Standard API Response Format
+
+**Success Response:**
 ```json
 {
-  "status": "success",
-  "message": "Operation completed successfully.",
-  "data": { ... }
+  "success": true,
+  "message": "Order retrieved successfully",
+  "data": {
+    "_id": "64b1f...",
+    "totalAmount": 150.00,
+    "status": "PROCESSING"
+  }
 }
 ```
 
-## 38. Postman Testing
-Refer to the `API_DOCUMENTATION.md` file located in the `/backend` directory for instructions on setting up Postman Environments and dynamic pre-request scripts to automatically capture and append your Bearer token.
-
-## 39. Deployment Preparation
-The system features a multi-stage `Dockerfile`. 
-To deploy via Docker:
-```bash
-docker build -t amazon-orders-api .
-docker run -p 5000:5000 --env-file .env amazon-orders-api
+**Error Response:**
+```json
+{
+  "success": false,
+  "error": "Validation Error",
+  "message": "\"totalAmount\" is required"
+}
 ```
-The application handles internal graceful shutdown logic out-of-the-box (`SIGTERM`), ensuring active HTTP connections drain cleanly before the process exits during rolling deployments on AWS ECS, Google Cloud Run, or Kubernetes.
 
-## 40. GitHub Workflow
-Code is committed directly or via Pull Requests to the `main` branch. The repository maintains a clean linear history via rebase strategies.
+---
 
-## 41. Branching Strategy
-- `main`: Represents the production-ready, stable deployable state.
-- `feature/*`: Short-lived branches for isolated development of API modules (e.g. `feature/bulk-operations`).
+## 🧪 Postman Testing Guide
 
-## 42. Commit Message Convention
-Commits follow the conventional commits standard:
-- `feat(module):` New features.
-- `fix(module):` Bug fixes.
-- `chore(module):` Maintenance, configurations, or dependencies.
-- `refactor(module):` Optimization without behavior changes.
+1. Import the provided **Postman Collection** (`Amazon_Orders_API.postman_collection.json` if available).
+2. Set up an environment with `{{baseUrl}}` pointing to `http://localhost:5000/api`.
+3. Hit the `/auth/login` endpoint to obtain a token.
+4. Set the token as a Bearer Token in Postman authorization settings to access protected routes.
 
-## 43. Best Practices Followed
-- Separation of Concerns (MVC + Service Layer).
-- Fail-Fast configuration loading.
-- Centralized Error Handling.
-- Automated payload validation.
-- RESTful HTTP Verb and Status Code semantic compliance.
+---
 
-## 44. Scalability Considerations
-The API is completely stateless, meaning session data is not stored in Node.js memory. This allows the backend to be horizontally scaled to an infinite number of parallel container instances behind a Load Balancer.
+## ☁️ Deployment Guide
 
-## 45. Future Improvements
-- Implement Redis caching for heavily hit administrative analytical queries.
-- Migrate from simple audit files to a centralized logging system like ELK (Elasticsearch, Logstash, Kibana) or Datadog.
-- Implement Webhooks for asynchronous order event broadcasting.
+The application is prepared for production deployment (AWS, Heroku, Render, etc.).
+- Ensure `NODE_ENV=production`.
+- Provide secure environment variables.
+- Ensure the MongoDB cluster allows connections from the deployment server's IP.
 
-## 46. Learning Outcomes
-This architecture demonstrates advanced comprehension of enterprise Node.js environments, including memory optimization via query projection, bypassing document wrappers via `.lean()`, mitigating denial-of-service vectors via payload validation limits, and designing stateless containerized deployments.
+---
 
-## 47. Author Section
-Architected and developed by **Jal Patel**.
+## 🌿 Git Workflow
 
-## 48. License Section
-This project is licensed under the ISC License.
+- **Branching Strategy**: 
+  - `main`: Production-ready code.
+  - `develop`: Integration branch for features.
+  - `feature/feature-name`: New features.
+- **Commit Convention**: Conventional Commits (e.g., `feat: add order search`, `fix: pagination bug`).
+
+---
+
+## 📈 Scalability Considerations & Future Improvements
+
+- Implement Redis caching for analytics and high-read endpoints.
+- Introduce Message Queues (RabbitMQ/Kafka) for asynchronous email notifications and invoice generation.
+- Microservices transition for the Search and Analytics modules.
+
+---
+
+## 🎓 Learning Outcomes
+
+Developing this system deepened expertise in:
+- Designing scalable enterprise-grade backend architectures.
+- Managing complex relationships in MongoDB.
+- Implementing advanced filtering and querying mechanisms.
+- Building reusable software components and standardizing API responses.
+
+---
+
+## 👨‍💻 Author
+
+**Jal Patel**
+- GitHub: [@jalpatel2646](https://github.com/jalpatel2646)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
